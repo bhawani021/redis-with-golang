@@ -25,13 +25,17 @@ func getRedisInstance() *redis.Client {
 
 func SetValue(key string, value interface{}) (bool, error) {
 	val, _ := json.Marshal(value)
+	// Get redis instance
 	redisClient := getRedisInstance()
+	// Set method has third parameter expiration
+	// Zero expiration means the key has no expiration time.
 	err := redisClient.Set(key, string(val), 0).Err()
 	return true, err
 }
 
 func GetValue(key string) (interface{}, error) {
 	var val interface{}
+	// Get redis instance
 	redisClient := getRedisInstance()
 	result, err := redisClient.Get(key).Result()
 	_ = json.Unmarshal([]byte(result), &val)
