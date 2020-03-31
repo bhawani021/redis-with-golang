@@ -50,6 +50,11 @@ func main()  {
 	result, _ = redisClient.Get(KeyToAdd).Result()
 	_ = json.Unmarshal([]byte(result), &resultData1)
 	fmt.Println("resultData1 =", resultData1) // resultData1 =
+
+	// RPush
+	inputList := []string{"Red", "Green", "Black", "Blue"}
+	_ = redisClient.RPush("key1", inputList).Err()
+
 }
 
 
